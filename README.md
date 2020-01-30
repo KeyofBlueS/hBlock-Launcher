@@ -32,3 +32,8 @@ Options:
 -d, --debug	Not really deploy hBlock and just test THIS script
 -h, --help	Show this help
 ```
+
+### LIST.TXT
+In this repository there is a blocklist you can add to your sources:
+
+https://raw.githubusercontent.com/KeyofBlueS/hBlock-Launcher/master/list.txt
