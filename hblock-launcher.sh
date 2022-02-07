@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Version:    0.0.3
+# Version:    0.0.4
 # Author:     KeyofBlueS
 # Repository: https://github.com/KeyofBlueS/hBlock-Launcher
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -210,6 +210,15 @@ function launch()	{
 		fi
 	done
 
+	# Enable parallel lists download
+	if [[ -z "${PARALLEL}" ]]; then
+		PARALLEL="$(expr $(awk NF "${SOURCES}" | wc -l) / 2)"
+		HBOPTIONS="${HBOPTIONS} -p ${PARALLEL}"
+		echo "parallel automatically setted to ${PARALLEL}"
+	else
+		echo "parallel manually setted to ${PARALLEL}"
+	fi
+
 	# Show domains blocked before and after hBlock is deployed
 	DOMAINSOLD="$(cat /etc/hosts | grep -E "^"${REDIRECT}" " | tr " " "\n" | grep -Ev "^"${REDIRECT}"$|^[[:blank:]]*#|^[[:blank:]]*$")"
 	DOMAINSCOUNTOLD="$(echo "${DOMAINSOLD}" | wc -l)"
@@ -277,7 +286,7 @@ function givemehelp(){
 	echo "
 	# hBlock-Launcher
 
-	# Version:    0.0.1
+	# Version:    0.0.4
 	# Author:     KeyofBlueS
 	# Repository: https://github.com/KeyofBlueS/hBlock-Launcher
 	# License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
@@ -305,8 +314,11 @@ function givemehelp(){
 		exit 0
 	fi
 }
+
 HBLOCK_EXEC="${0}"
 OPTIONS="$@"
+printf "\033]2;${0##*/}\a"
+
 for opt in "$@"; do
 	shift
 	case "$opt" in
@@ -383,7 +395,7 @@ I'll try to use the default one.\e[0m"
 		;;
 		c ) HBOPTIONS="${HBOPTIONS} -c ${OPTARG}"
 		;;
-		p ) HBOPTIONS="${HBOPTIONS} -p ${OPTARG}"
+		p ) HBOPTIONS="${HBOPTIONS} -p ${OPTARG}"; PARALLEL="${OPTARG}"
 		;;
 		q ) HBOPTIONS="${HBOPTIONS} -q ${OPTARG}"
 		;;
