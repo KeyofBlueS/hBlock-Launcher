@@ -1,6 +1,6 @@
 # hBlock-Launcher
 
-# Version:    0.0.1
+# Version:    0.0.4
 # Author:     KeyofBlueS
 # Repository: https://github.com/KeyofBlueS/hBlock-Launcher
 # License:    GNU General Public License v3.0, https://opensource.org/licenses/GPL-3.0
